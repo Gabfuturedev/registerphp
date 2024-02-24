@@ -90,13 +90,7 @@
         height: 30px;
     }label{
          font-size: 15px; 
-        /* margin-right: 80%;
-        width: 100%;  */
-    }.con{
-        /* font-size: 15px;
-        margin-right: 65%;
-        width: 100%; */
-
+       
     }
 
 
@@ -124,17 +118,16 @@
             
         }
     }
-
-
 </style>
 
 
 
 <?php
-if(isset($_POST["fullname"])){
-    $name = $_POST["fullname"];
-    
-}  
+session_start();
+
+if (isset($_SESSION['fullname'])) {
+    $fullname = $_SESSION['fullname'];
+}
 ?>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -145,7 +138,7 @@ if(isset($_POST["fullname"])){
         <form action="complete.php" method="post">
             <div class="card">
                 <div class="card-content">
-                <h2 class="card-title">Hi, <?php  echo $name; ?>!
+                <h2 class="card-title">Hi, <?php  echo $fullname; ?>!
                 <hr>
                     
                 

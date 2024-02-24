@@ -1,9 +1,15 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Card Example</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         @font-face {
     font-family: 'gab'; /* You can choose any name for your font */
@@ -87,22 +93,39 @@
 <body>   
 <h1 class="step">Step 1</h1>
     <div class="container">
-        <form action="rstep3.php" method="post">
+        <form method="post" action="rstep3.php">
             <div class="card">
                 <div class="card-content">
                     <h2 class="card-title">What's your name?</h2>
                     <input type="text" name="fullname" placeholder="Juan Dela Cruz">
                     <br><br><br>
-                    <button class="next-btn" type="submit">Next</button>
+                    <button class="next-btn" name="next" type="submit" >Next</button>
                 </div>
             </div>
         </form>
     </div>
     <?php
-    if(isset($_POST["fullname"])){
-        $name = $_POST["fullname"];
-        
-    } 
-    ?>
+
+if(isset($_POST["fullname"])){
+    $fullname = $_POST['fullname'];
+    $san_fullname = filter_var($fullname, FILTER_SANITIZE_STRING);
+    $pattfull = "/^[a-zA-Z][a-zA-Z\s.\-]*$/";
+    $resname = preg_match($pattfull, $san_fullname);
+
+    if ($resname == 1) {
+        $_SESSION['fullname'] = $san_fullname;
+        // exit();
+    }else{
+        echo "<script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid name!',
+            text: 'Please check it again carefully!',
+        });
+    </script>";
+    }
+}
+
+?>
 </body>
 </html>
